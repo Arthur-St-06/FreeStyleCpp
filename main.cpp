@@ -23,25 +23,49 @@ bool isPrime(int n) {
    return true;
 }
 
+class Fraction {
+private:
+    int numerator;
+    int denominator;
+
+public:
+    Fraction(int numerator, int denominator) : numerator(numerator), denominator(denominator) {}
+
+    int getNumerator() const { return numerator; }
+    int getDenominator() const { return denominator; }
+
+    void setNumerator(int numerator) { this->numerator = numerator; }
+    void setDenominator(int denominator) { this->denominator = denominator; }
+
+    bool operator==(const Fraction& other) {
+        return this->getNumerator() == other.getNumerator() && this->getDenominator() == other.getDenominator();
+    }
+
+    bool operator!=(const Fraction& other) {
+        return !(*this == other);
+    }
+};
+
 int gcd(int a, int b) {
-   while (b != 0) {
-       int tmp = a % b;
-       a = b;
-       b = tmp;
-   }
-   return a;
+    while (b != 0) {
+        int tmp = a % b;
+        a = b;
+        b = tmp;
+    }
+    return a;
 }
 
-vector<int> reduceFraction(const vector<int>& nums) {
-   vector<int> result;
-   int divisor = gcd(nums[0], nums[1]);
-   result.push_back(nums[0] / divisor);
-   result.push_back(nums[1] / divisor);
-   return result;
+Fraction reduceFraction(const Fraction &fraction) {
+    // assert if 0 is denominator
+
+    int divisor = gcd(fraction.getNumerator(), fraction.getDenominator());
+
+    Fraction result(fraction.getNumerator() / divisor, fraction.getDenominator() / divisor);
+    return result;
 }
 
 template <typename FuncType, typename InputType, typename OutputType>
-void testFunction(FuncType func, const vector<InputType>& inputs, const vector<OutputType>& expected) {
+void test(FuncType func, const vector<InputType>& inputs, const vector<OutputType>& expected) {
    for (int i = 0; i < inputs.size(); i++) {
        if (func(inputs[i]) != expected[i]) {
            cout << "FAIL" << endl;
@@ -55,19 +79,19 @@ int main() {
    vector<int> isPowerInputs = {2, 3, 4, 5, 10, 15, 16, 17};
    vector<bool> isPowerExpected = {true, false, true, false, false, false, true, false};
    cout << "Testing isPowerOfTwoIteratively" << endl;
-   testFunction(isPowerOfTwoIteratively, isPowerInputs, isPowerExpected);
+   test(isPowerOfTwoIteratively, isPowerInputs, isPowerExpected);
    cout << "Testing isPowerOfTwoBinary" << endl;
-   testFunction(isPowerOfTwoBinary, isPowerInputs, isPowerExpected);
+   test(isPowerOfTwoBinary, isPowerInputs, isPowerExpected);
 
    vector<int> isPrimeInputs = {2, 3, 4, 5, 6, 7, 10, 17};
    vector<bool> isPrimeExpected = {true, true, false, true, false, true, false, true};
    cout << "Testing isPrime" << endl;
-   testFunction(isPrime, isPrimeInputs, isPrimeExpected);
+   test(isPrime, isPrimeInputs, isPrimeExpected);
 
-   vector<vector<int>> reduceFractionInputs = {{2, 3}, {3, 2}, {12, 14}, {12, 18}};
-   vector<vector<int>> reduceFractionExpected = {{2, 3}, {3, 2}, {6, 7}, {2, 3}};
+   vector<Fraction> reduceFractionInputs = {Fraction(2, 3), Fraction(3, 2), Fraction(12, 14), Fraction(12, 18)};
+   vector<Fraction> reduceFractionExpected = {Fraction(2, 3), Fraction(3, 2), Fraction(6, 7), Fraction(2, 3)};
    cout << "Testing reduceFraction" << endl;
-   testFunction(reduceFraction, reduceFractionInputs, reduceFractionExpected);
+   test(reduceFraction, reduceFractionInputs, reduceFractionExpected);
 
    return 0;
 }
