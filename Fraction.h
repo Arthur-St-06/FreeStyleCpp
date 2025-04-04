@@ -15,8 +15,8 @@ public:
 
     static Fraction reduce(const Fraction& fraction);
 
-    bool operator==(const Fraction& other);
-    bool operator!=(const Fraction& other);
+    bool operator==(const Fraction& other) const;
+    bool operator!=(const Fraction& other) const;
 };
 
 #endif //FRACTION_H

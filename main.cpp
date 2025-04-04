@@ -8,8 +8,6 @@ template <typename FuncType, typename InputType, typename OutputType>
 void compareOutputs(FuncType func, const vector<InputType>& inputs, const vector<OutputType>& expected) {
    for (int i = 0; i < inputs.size(); i++) {
        if (func(inputs[i]) != expected[i]) {
-            auto f = func(inputs[i]);
-
            cout << "FAIL" << endl;
            return;
        }
@@ -18,12 +16,19 @@ void compareOutputs(FuncType func, const vector<InputType>& inputs, const vector
 }
 
 void testIsPowerOfTwo() {
-    const vector<int> isPowerInputs = {0, 2, 3, 4, 5, 10, 15, 16, 17, 1048576, 1048500};
-    const vector<bool> isPowerExpected = {false, true, false, true, false, false, false, true, false, true, false};
+    const vector<int> isPowerInputs = {-5, 0, 2, 3, 4, 5, 10, 15, 16, 17, 1048576, 1048500};
+    const vector<bool> isPowerExpected = {false, false, true, false, true, false, false, false, true, false, true, false};
     cout << "Testing isPowerOfTwoIteratively" << endl;
     compareOutputs(isPowerOfTwoIteratively, isPowerInputs, isPowerExpected);
     cout << "Testing isPowerOfTwoBinary" << endl;
     compareOutputs(isPowerOfTwoBinary, isPowerInputs, isPowerExpected);
+
+    const vector<float> isPowerFloatInputs = {-5.0f, 0.25f, 0.5f, 0.6f, 0.0f, 2.0f, 16.0f, 17.0f, 1048576.0f, 1048500.0f};
+    const vector<bool> isPowerFLoatExpected = {false, true, true, false, false, true, true, false, true, false};
+    cout << "Testing isPowerOfTwoIterativelyFloat" << endl;
+    compareOutputs(isPowerOfTwoIterativelyFloat, isPowerFloatInputs, isPowerFLoatExpected);
+    cout << "Testing isPowerOfTwoBinaryFloat" << endl;
+    compareOutputs(isPowerOfTwoBinaryFloat, isPowerFloatInputs, isPowerFLoatExpected);
 }
 
 void testIsPrime() {

@@ -19,11 +19,11 @@ Fraction Fraction::reduce(const Fraction &fraction) {
     return result;
 }
 
-bool Fraction::operator==(const Fraction& other) {
+bool Fraction::operator==(const Fraction& other) const {
     return this->getNumerator() == other.getNumerator() && this->getDenominator() == other.getDenominator() ||
-           -this->getNumerator() == other.getNumerator() && -this->getDenominator() == other.getDenominator(); // makes -2/3 == 2/-3
+           -this->getNumerator() == other.getNumerator() && -this->getDenominator() == other.getDenominator(); // Makes -2/3 == 2/-3
 }
 
-bool Fraction::operator!=(const Fraction& other) {
+bool Fraction::operator!=(const Fraction& other) const {
     return !(*this == other);
 }
