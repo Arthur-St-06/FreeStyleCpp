@@ -8,6 +8,8 @@ template <typename FuncType, typename InputType, typename OutputType>
 void compareOutputs(FuncType func, const vector<InputType>& inputs, const vector<OutputType>& expected) {
    for (int i = 0; i < inputs.size(); i++) {
        if (func(inputs[i]) != expected[i]) {
+            auto f = func(inputs[i]);
+
            cout << "FAIL" << endl;
            return;
        }
@@ -16,8 +18,8 @@ void compareOutputs(FuncType func, const vector<InputType>& inputs, const vector
 }
 
 void testIsPowerOfTwo() {
-    vector<int> isPowerInputs = {2, 3, 4, 5, 10, 15, 16, 17};
-    vector<bool> isPowerExpected = {true, false, true, false, false, false, true, false};
+    const vector<int> isPowerInputs = {0, 2, 3, 4, 5, 10, 15, 16, 17, 1048576, 1048500};
+    const vector<bool> isPowerExpected = {false, true, false, true, false, false, false, true, false, true, false};
     cout << "Testing isPowerOfTwoIteratively" << endl;
     compareOutputs(isPowerOfTwoIteratively, isPowerInputs, isPowerExpected);
     cout << "Testing isPowerOfTwoBinary" << endl;
@@ -25,15 +27,26 @@ void testIsPowerOfTwo() {
 }
 
 void testIsPrime() {
-    vector<int> isPrimeInputs = {2, 3, 4, 5, 6, 7, 10, 17};
-    vector<bool> isPrimeExpected = {true, true, false, true, false, true, false, true};
+    const vector<int> isPrimeInputs = {-5, 0, 1, 2, 3, 4, 5, 6, 7, 10, 17, 997, 1000};
+    const vector<bool> isPrimeExpected = {false, false, false, true, true, false, true, false, true, false, true, true, false};
     cout << "Testing isPrime" << endl;
     compareOutputs(isPrime, isPrimeInputs, isPrimeExpected);
 }
 
 void testReduceFraction() {
-    vector<Fraction> reduceFractionInputs = {Fraction(2, 3), Fraction(3, 2), Fraction(12, 14), Fraction(12, 18)};
-    vector<Fraction> reduceFractionExpected = {Fraction(2, 3), Fraction(3, 2), Fraction(6, 7), Fraction(2, 3)};
+    const vector<Fraction> reduceFractionInputs = {Fraction(2, 3),
+                                                   Fraction(-2, 3),
+                                                   Fraction(-2, 3),
+                                                   Fraction(12, 14),
+                                                   Fraction(12, 18),
+                                                   Fraction(0, -10)};
+
+    const vector<Fraction> reduceFractionExpected = {Fraction(2, 3),
+                                                     Fraction(-2, 3),
+                                                     Fraction(2, -3),
+                                                     Fraction(6, 7),
+                                                     Fraction(2, 3),
+                                                     Fraction(0, 1)};
     cout << "Testing reduceFraction" << endl;
     compareOutputs(Fraction::reduce, reduceFractionInputs, reduceFractionExpected);
 }

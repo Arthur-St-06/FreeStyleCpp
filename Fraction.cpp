@@ -1,5 +1,6 @@
 #include "Fraction.h"
 #include "MathUtils.h"
+#include <cassert>
 
 Fraction::Fraction(int numerator, int denominator) : numerator(numerator), denominator(denominator) {}
 
@@ -10,7 +11,7 @@ void Fraction::setNumerator(int numerator) { this->numerator = numerator; }
 void Fraction::setDenominator(int denominator) { this->denominator = denominator; }
 
 Fraction Fraction::reduce(const Fraction &fraction) {
-    // assert if 0 is denominator
+    assert(fraction.getDenominator() != 0);
 
     int divisor = gcd(fraction.getNumerator(), fraction.getDenominator());
 
@@ -19,7 +20,8 @@ Fraction Fraction::reduce(const Fraction &fraction) {
 }
 
 bool Fraction::operator==(const Fraction& other) {
-    return this->getNumerator() == other.getNumerator() && this->getDenominator() == other.getDenominator();
+    return this->getNumerator() == other.getNumerator() && this->getDenominator() == other.getDenominator() ||
+           -this->getNumerator() == other.getNumerator() && -this->getDenominator() == other.getDenominator(); // makes -2/3 == 2/-3
 }
 
 bool Fraction::operator!=(const Fraction& other) {
