@@ -1,0 +1,13 @@
+Make sure that code compiles, makes what was expected and is efficient.
+Don’t add a lot of comments, but make sure to explain complex functionality.
+Coding style should be consistent.
+
+We use git and github to track progress and features, and to collaborate
+
+Steps to create the project:
+Create a project.
+Create a git repository.
+Connect to a remote repository.
+Push the local repository to github.
+
+When working on a problem, first make a simple solution that passes all tests, and then think about optimizing it.
